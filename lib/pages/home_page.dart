@@ -4,7 +4,12 @@ import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
 import 'package:flutter_application_1/models/note.dart';
 
-final List<Tovar> list = <Tovar>[Tovar(url:'../2.webp', price:'999₽', discription:'АМНЯМ 1')];
+final List<Tovar> list = <Tovar>[
+  Tovar(url:'../2.webp', price:'999₽', discription:'АМНЯМ 1'), 
+  Tovar(url:'../4.webp', price:'9999₽', discription:'АМНЯМ 2')
+];
+
+final List<Tovar> favorite = <Tovar>[];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,15 +26,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _addToFavorite(int index) {
+    setState(() {
+      favorite.add(list[index]);
+    });
+  }
+
   void _addTovar(Tovar tovar) {
     setState(() {
       list.add(tovar);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Center(child: Text('АМНЯМЫ', style: TextStyle(fontSize: 24, color: Colors.white),),), backgroundColor: Colors.black,
+      appBar: AppBar(title: const Center(child: Text('ТОВАРЫ', style: TextStyle(fontSize: 24, color: Colors.white),),), backgroundColor: Colors.black,
       ),
       body: Padding(padding: const EdgeInsets.all(8),
         child: ListView.builder(
@@ -43,7 +55,9 @@ class _HomePageState extends State<HomePage> {
               ),
               child: ItemNote(
                 tovar: list[index],
-                onRemove: () => _removeTovar(index),),
+                onRemove: () => _removeTovar(index),
+                onFavorite: () => _addToFavorite(index),
+                ),
               );
           },
         ),

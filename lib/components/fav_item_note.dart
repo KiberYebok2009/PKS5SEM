@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/note.dart';
 
-class ItemNote extends StatelessWidget {
-  const ItemNote({super.key, required this.tovar, required this.onRemove, required this.onFavorite,});
+class FavItemNote extends StatelessWidget {
+  const FavItemNote({super.key, required this.tovar, required this.onRemove,});
 
   final Tovar tovar;
   final VoidCallback onRemove;
-  final VoidCallback onFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +34,7 @@ class ItemNote extends StatelessWidget {
                   style: FilledButton.styleFrom(
                   backgroundColor: Colors.black),
                   onPressed: onRemove,
-                  child: const Text('Удалить товар', style: TextStyle(fontSize: 18, color: Colors.white,),),),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                  backgroundColor: Colors.black),
-                  onPressed: onFavorite,
-                  child: const Text('В избранное', style: TextStyle(fontSize: 18, color: Colors.white,),),),
+                  child: const Text('Удалить из избранного', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, color: Colors.white,),)),
               ),
             ],
           ),
