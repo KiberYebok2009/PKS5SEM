@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/home_page.dart';
 import 'package:flutter_application_1/pages/favorite_page.dart';
+import 'package:flutter_application_1/pages/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     FavoritePage(),
-    // ThirdPage(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
