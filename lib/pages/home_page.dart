@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/item_note.dart';
 import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
-// import 'package:flutter_application_1/pages/cart_page.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/models/note.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
 
 final List<Tovar> list = <Tovar>[
   Tovar(url:'../amnyam.webp', price:'999', discription:'АМНЯМ 1'), 
@@ -37,12 +38,37 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // void _addToCart(int index) {
-  //   setState(() {
-  //     cart.add(list[index]);
-  //     Navigator.pop(context, Tovar);
-  //   });
-  // }
+  void _addToCart(int index) {
+    setState(() {
+      if (tovars.contains(list[index]) == false) {
+        tovars.add(list[index]);
+
+        CartModel temp = CartModel(
+          url: list[index].url, 
+          price: list[index].price,
+          count: 1
+        );
+        cart.add(temp);
+
+        // Navigator.pop(context, Tovar);
+      }
+
+      else {
+        int tempInd = tovars.indexOf(list[index]);
+
+        CartModel temp = CartModel(
+          url: cart[tempInd].url, 
+          price: cart[tempInd].price,
+          count: cart[tempInd].count + 1
+        );
+
+        cart[tempInd] = temp;
+
+        Navigator.pop(context, Tovar);
+      }
+
+    });
+  }
 
   void _addTovar(Tovar tovar) {
     setState(() {
@@ -68,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     tovar: list[index],
                     onRemove: () { _removeTovar(index); },
                     onFavorite: () { _addToFavorite(index); },
-                    onCart: () { _addToFavorite(index); }, // addToCart
+                    onCart: () { _addToCart(index); }, // addToCart
                   ),
                 ),
               ),
