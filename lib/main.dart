@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/pages/home_page.dart';
 import 'package:flutter_application_1/pages/favorite_page.dart';
-import 'package:flutter_application_1/pages/profile.dart';
+// import 'package:flutter_application_1/pages/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -36,7 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     FavoritePage(),
-    ProfilePage(),
+    // ProfilePage(),
+    CartPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -62,9 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.favorite, color: Colors.white,),
             label: 'Избранное',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person, color: Colors.white,),
+          //   label: 'Профиль',
+          // ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.white,),
-            label: 'Профиль',
+            icon: Icon(Icons.shopping_cart, color: Colors.white,),
+            label: 'Корзина',
           ),
           
         ],

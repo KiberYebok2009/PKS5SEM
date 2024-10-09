@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/note.dart';
+// import 'package:flutter_application_1/pages/cart_page.dart';
+
+class CartItem extends StatefulWidget {
+  const CartItem({
+    super.key, 
+    required this.tovar, 
+    required this.onAdd, 
+    required this.onDeleate, 
+  });
+
+  final VoidCallback onAdd;
+  final VoidCallback onDeleate;
+  final Tovar tovar;
+
+  @override
+  State<CartItem> createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.2,
+          decoration: BoxDecoration(color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(8), 
+          border: Border.all(color: Colors.white, width: 2),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(widget.tovar.url, height: 70, width: 70,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
+                  border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(widget.tovar.price, style: const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(padding: const EdgeInsets.all(0.0),
+                child: TextButton(
+                  onPressed: widget.onAdd,
+                    child: Container(width: 50, height: 50,
+                      decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
+                        borderRadius: BorderRadius.circular(8), 
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Center(
+                        child: Text('+', 
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                ),
+              ),
+              Padding(padding: const EdgeInsets.all(0.0),
+                child: TextButton(
+                  onPressed: widget.onDeleate,
+                    child: Container(width: 50, height: 50,
+                      decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
+                        borderRadius: BorderRadius.circular(8), 
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Center(
+                        child: Text('-', 
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
+                  border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(widget.tovar.price, style: const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

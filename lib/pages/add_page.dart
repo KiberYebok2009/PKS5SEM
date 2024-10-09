@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/note.dart';
+// import 'package:flutter_application_1/pages/cart_page.dart';
 
 class AddPage extends StatelessWidget {
   const AddPage({super.key, required this.tovar, required this.onAdd});
@@ -55,7 +56,12 @@ class AddPage extends StatelessWidget {
                 if (url.isNotEmpty) {
                   if (price.isNotEmpty) {
                     if (discription.isNotEmpty) {
-                      onAdd(Tovar(url:url, price: price, discription: discription));
+                      onAdd(Tovar(
+                        url: url,
+                        price: price, 
+                        discription: discription,
+                        // count: 1,
+                        ));
                       Navigator.pop(context, Tovar);
                     }
                   }

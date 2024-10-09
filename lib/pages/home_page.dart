@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/item_note.dart';
 import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/models/note.dart';
 
 final List<Tovar> list = <Tovar>[
@@ -36,6 +37,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _addToCart(int index) {
+    setState(() {
+      cart.add(list[index]);
+      Navigator.pop(context, Tovar);
+    });
+  }
+
   void _addTovar(Tovar tovar) {
     setState(() {
       list.add(tovar);
@@ -55,7 +63,14 @@ class _HomePageState extends State<HomePage> {
             return GestureDetector(
               onTap: () => Navigator.push(
                 context, 
-                MaterialPageRoute(builder: (context) => NotePage(tovar: list[index], onRemove: () { _removeTovar(index); }, onFavorite: () { _addToFavorite(index); },),),
+                MaterialPageRoute(
+                  builder: (context) => NotePage(
+                    tovar: list[index],
+                    onRemove: () { _removeTovar(index); },
+                    onFavorite: () { _addToFavorite(index); },
+                    onCart: () { _addToCart(index); },
+                  ),
+                ),
               ),
               child: ItemNote(
                 tovar: list[index],

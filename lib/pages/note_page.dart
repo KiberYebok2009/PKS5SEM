@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/note.dart';
 
 class NotePage extends StatelessWidget {
-  const NotePage({super.key, required this.tovar, required this.onRemove, required this.onFavorite,});
+  const NotePage({super.key, required this.tovar, required this.onRemove, required this.onFavorite, required this.onCart,});
 
   final Tovar tovar;
   final VoidCallback onRemove;
   final VoidCallback onFavorite;
+  final VoidCallback onCart;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class NotePage extends StatelessWidget {
         Center(
           child: Container(
             width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.8,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white, width: 2), 
             ),
@@ -72,6 +73,25 @@ class NotePage extends StatelessWidget {
                     backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
                     onPressed: onFavorite,
                     child: const Text('В избранное', style: TextStyle(fontSize: 20, color: Colors.white,),),),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      side: BorderSide(
+                        color: Colors.white,
+                        width: 2,
+                      ),
+                    ),
+                    backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
+                    onPressed: onCart,
+                    child: const Text('В корзину', style: TextStyle(fontSize: 20, color: Colors.white,),),),
                 ),
               ),
               ],
