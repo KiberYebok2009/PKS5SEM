@@ -1,11 +1,11 @@
-class Tovar{
+class CartModel{
   final String url;
   final String price;
-  final String discription;
+  final int count;
 
-  Tovar({
+  CartModel({
     required this.url, 
     required this.price, 
-    required this.discription, 
+    required this.count, 
     });
 }

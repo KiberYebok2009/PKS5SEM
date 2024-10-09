@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/item_note.dart';
 import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
-import 'package:flutter_application_1/pages/cart_page.dart';
+// import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/models/note.dart';
 
 final List<Tovar> list = <Tovar>[
-  Tovar(url:'../amnyam.webp', price:'999₽', discription:'АМНЯМ 1'), 
-  Tovar(url:'../4.webp', price:'9999₽', discription:'АМНЯМ 2')
+  Tovar(url:'../amnyam.webp', price:'999', discription:'АМНЯМ 1'), 
+  Tovar(url:'../4.webp', price:'9999', discription:'АМНЯМ 2')
 ];
 
 final List<Tovar> favorite = <Tovar>[];
@@ -37,12 +37,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _addToCart(int index) {
-    setState(() {
-      cart.add(list[index]);
-      Navigator.pop(context, Tovar);
-    });
-  }
+  // void _addToCart(int index) {
+  //   setState(() {
+  //     cart.add(list[index]);
+  //     Navigator.pop(context, Tovar);
+  //   });
+  // }
 
   void _addTovar(Tovar tovar) {
     setState(() {
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     tovar: list[index],
                     onRemove: () { _removeTovar(index); },
                     onFavorite: () { _addToFavorite(index); },
-                    onCart: () { _addToCart(index); },
+                    onCart: () { _addToFavorite(index); }, // addToCart
                   ),
                 ),
               ),

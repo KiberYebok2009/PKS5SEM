@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/note.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
 // import 'package:flutter_application_1/pages/cart_page.dart';
 
 class CartItem extends StatefulWidget {
   const CartItem({
     super.key, 
-    required this.tovar, 
+    required this.cart, 
     required this.onAdd, 
     required this.onDeleate, 
   });
 
   final VoidCallback onAdd;
   final VoidCallback onDeleate;
-  final Tovar tovar;
+  final CartModel cart;
 
   @override
   State<CartItem> createState() => _CartItemState();
 }
 
 class _CartItemState extends State<CartItem> {
+
+  int counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +38,12 @@ class _CartItemState extends State<CartItem> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(widget.tovar.url, height: 70, width: 70,),
+                child: Image.asset(widget.cart.url, height: 70, width: 70,),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: 100,
+                  width: 80,
                   height: 50,
                   decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
                   border: Border.all(color: Colors.white, width: 2),
@@ -49,7 +51,7 @@ class _CartItemState extends State<CartItem> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                      child: Text(widget.tovar.price, style: const TextStyle(fontSize: 16, color: Colors.white),
+                      child: Text(widget.cart.price, style: const TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),
@@ -98,7 +100,7 @@ class _CartItemState extends State<CartItem> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                      child: Text(widget.tovar.price, style: const TextStyle(fontSize: 16, color: Colors.white),
+                      child: Text(widget.cart.count.toString(), style: const TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/cart_item.dart';
 // import 'package:flutter_application_1/pages/note_page.dart';
-import 'package:flutter_application_1/models/note.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
 
-final List<Tovar> cart = <Tovar>[
-  Tovar(url:'../amnyam.webp', price:'999₽', discription:'АМНЯМ 1'), 
-  Tovar(url:'../4.webp', price:'9999₽', discription:'АМНЯМ 2')
+final List<CartModel> cart = <CartModel>[
+  CartModel(url:'../amnyam.webp', price:'999', count: 1), 
+  CartModel(url:'../4.webp', price:'9999', count: 1)
 ];
 
 // final List<int> count = <int> [0, 0];
@@ -19,15 +19,33 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
 
-  void _add(Tovar tovar) {
+  void _add(index) {
     setState(() {
-      cart.add(tovar);
+        CartModel temp = CartModel(
+          url: cart[index].url, 
+          price: cart[index].price,
+          count: cart[index].count + 1
+        );
+
+        cart[index] = temp;
     });
   }
 
-  void _deleate(Tovar tovar) {
+  void _deleate(index) {
     setState(() {
-      cart.remove(tovar);
+      if (cart[index].count == 1) {
+        cart.removeAt(index);
+      }
+
+      else {
+        CartModel temp = CartModel(
+          url: cart[index].url, 
+          price: cart[index].price,
+          count: cart[index].count - 1
+        );
+
+        cart[index] = temp;
+      }
     });
   }
 
@@ -49,9 +67,9 @@ class _CartPageState extends State<CartPage> {
           itemCount: cart.length,
           itemBuilder: (BuildContext context, int index) {
             return CartItem(
-              tovar: cart[index], 
-              onAdd: () => _add(cart[index]),
-              onDeleate: () => _deleate(cart[index]),
+              cart: cart[index], 
+              onAdd: () => _add(index),
+              onDeleate: () => _deleate(index),
             );
           },
         ),
