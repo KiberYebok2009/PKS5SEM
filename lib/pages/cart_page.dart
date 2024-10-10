@@ -25,6 +25,14 @@ class _CartPageState extends State<CartPage> {
 
       cart[index] = temp; 
     }); 
+  }
+
+  void _removeAll(index) { 
+    setState(() { 
+      cart.removeAt(index); 
+      tovars.removeAt(index);
+
+    }); 
   } 
 
   void _deleate(index) { 
@@ -78,7 +86,8 @@ class _CartPageState extends State<CartPage> {
                   return CartItem( 
                     cart: cart[index],  
                     onAdd: () => _add(index), 
-                    onDeleate: () => _deleate(index), 
+                    onDeleate: () => _deleate(index),
+                    onRemove: () => _removeAll(index),
                   ); 
                 }, 
               ), 

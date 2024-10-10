@@ -8,10 +8,13 @@ class CartItem extends StatefulWidget {
     required this.cart, 
     required this.onAdd, 
     required this.onDeleate, 
+    required this.onRemove,
+
   });
 
   final VoidCallback onAdd;
   final VoidCallback onDeleate;
+  final VoidCallback onRemove;
   final CartModel cart;
 
   @override
@@ -117,7 +120,7 @@ class _CartItemState extends State<CartItem> {
                   ),
                   Padding(padding: const EdgeInsets.all(0.0),
                     child: TextButton(
-                      onPressed: widget.onAdd,
+                      onPressed: widget.onRemove,
                         child: Container(width: 200, height: 50,
                           decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
                             borderRadius: BorderRadius.circular(8), 
