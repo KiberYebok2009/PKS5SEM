@@ -20,8 +20,6 @@ class CartItem extends StatefulWidget {
 
 class _CartItemState extends State<CartItem> {
 
-  int counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,82 +27,111 @@ class _CartItemState extends State<CartItem> {
       child: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.195,
           decoration: BoxDecoration(color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(8), 
           border: Border.all(color: Colors.white, width: 2),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(widget.cart.url, height: 70, width: 70,),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 80,
-                  height: 50,
-                  decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
-                  border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: Padding(
+              Column(
+                children: [
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(widget.cart.price, style: const TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
+                    child: Image.asset(widget.cart.url, height: 50, width: 50,),
                   ),
-                ),
-              ),
-              Padding(padding: const EdgeInsets.all(0.0),
-                child: TextButton(
-                  onPressed: widget.onAdd,
-                    child: Container(width: 50, height: 50,
-                      decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
-                        borderRadius: BorderRadius.circular(8), 
-                        border: Border.all(color: Colors.white, width: 2),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 80,
+                      height: 50,
+                      decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
+                      border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: const Center(
-                        child: Text('+', 
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text('${widget.cart.price} ₽', style: const TextStyle(fontSize: 16, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                ),
+                  ),
+                ],
               ),
-              Padding(padding: const EdgeInsets.all(0.0),
-                child: TextButton(
-                  onPressed: widget.onDeleate,
-                    child: Container(width: 50, height: 50,
-                      decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
-                        borderRadius: BorderRadius.circular(8), 
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: const Center(
-                        child: Text('-', 
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(padding: const EdgeInsets.all(0.0),
+                        child: TextButton(
+                          onPressed: widget.onDeleate,
+                            child: Container(width: 50, height: 50,
+                              decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
+                                borderRadius: BorderRadius.circular(8), 
+                                border: Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: const Center(
+                                child: Text('-', 
+                                style: TextStyle(fontSize: 24, color: Colors.white),
+                                ),
+                              ),
+                            ),
                         ),
                       ),
-                    ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
-                  border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(widget.cart.count.toString(), style: const TextStyle(fontSize: 16, color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), borderRadius: BorderRadius.circular(8), 
+                          border: Border.all(color: Colors.white, width: 2),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(widget.cart.count.toString(), style: const TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
+                      Padding(padding: const EdgeInsets.all(0.0),
+                        child: TextButton(
+                          onPressed: widget.onAdd,
+                            child: Container(width: 50, height: 50,
+                              decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
+                                borderRadius: BorderRadius.circular(8), 
+                                border: Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: const Center(
+                                child: Text('+', 
+                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(padding: const EdgeInsets.all(0.0),
+                    child: TextButton(
+                      onPressed: widget.onAdd,
+                        child: Container(width: 200, height: 50,
+                          decoration: BoxDecoration(color: const Color.fromARGB(255, 139, 147, 255), 
+                            borderRadius: BorderRadius.circular(8), 
+                            border: Border.all(color: Colors.white, width: 2),
+                          ),
+                          child: const Center(
+                            child: Text('Удалить все товары', 
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

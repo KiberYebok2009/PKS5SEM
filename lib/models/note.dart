@@ -7,5 +7,5 @@ class Tovar{
     required this.url, 
     required this.price, 
     required this.discription, 
-    });
+  });
 }
