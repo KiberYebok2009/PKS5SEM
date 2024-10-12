@@ -22,4 +22,7 @@
 ![image](https://github.com/user-attachments/assets/89c31380-f93e-490f-ae91-234a94ed36f6)
 - **Корзина**
 ![image](https://github.com/user-attachments/assets/fdf7c108-f9ec-4444-ba6f-fe853942def8)
+- **Удаление**
+![image](https://github.com/user-attachments/assets/23680bd9-bd63-4533-998a-1d68d417962f)
+
 
