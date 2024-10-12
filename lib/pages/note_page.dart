@@ -10,7 +10,7 @@ class NotePage extends StatelessWidget {
   final VoidCallback onCart;
 
   @override
-  Widget build(BuildContext context) {
+   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Center(child: Text('АМНЯМ', style: TextStyle(fontSize: 24, color: Colors.white),),), backgroundColor: Colors.black,
       ),
@@ -38,62 +38,47 @@ class NotePage extends StatelessWidget {
                   child: Text('Цена: ${tovar.price}', style: const TextStyle(fontSize: 36, color: Colors.white),),
                 ),
                 Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 2,
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        side: BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
+                      onPressed: onRemove,
+                      child: const Text('Удалить товар', style: TextStyle(fontSize: 20, color: Colors.white,),),),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        onPressed: onFavorite,
+                        icon: const Icon(
+                          Icons.favorite, color: Colors.white,
+                        ),
                       ),
                     ),
-                    backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
-                    onPressed: onRemove,
-                    child: const Text('Удалить товар', style: TextStyle(fontSize: 20, color: Colors.white,),),),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 2,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        onPressed: onCart, 
+                        icon: const Icon(
+                          Icons.shopping_cart, color: Colors.white,
+                        ),
                       ),
                     ),
-                    backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
-                    onPressed: onFavorite,
-                    child: const Text('В избранное', style: TextStyle(fontSize: 20, color: Colors.white,),),),
+                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 200,
-                  height: 50,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 2,
-                      ),
-                    ),
-                    backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
-                    onPressed: onCart,
-                    child: const Text('В корзину', style: TextStyle(fontSize: 20, color: Colors.white,),),),
-                ),
-              ),
               ],
             ),
           ),

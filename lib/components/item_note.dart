@@ -45,44 +45,6 @@ class ItemNote extends StatelessWidget {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: SizedBox(
-              //     width: 200,
-              //     height: 50,
-              //     child: FilledButton(
-              //       style: FilledButton.styleFrom(
-              //         shape: const RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.all(Radius.circular(8)),
-              //         side: BorderSide(
-              //           color: Colors.white,
-              //           width: 2,
-              //         ),
-              //       ),
-              //       backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
-              //       onPressed: onRemove,
-              //       child: const Text('Удалить товар', style: TextStyle(fontSize: 20, color: Colors.white,),),),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: SizedBox(
-              //     width: 200,
-              //     height: 50,
-              //     child: FilledButton(
-              //       style: FilledButton.styleFrom(
-              //         shape: const RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.all(Radius.circular(8)),
-              //         side: BorderSide(
-              //           color: Colors.white,
-              //           width: 2,
-              //         ),
-              //       ),
-              //       backgroundColor: const Color.fromARGB(255, 139, 147, 255),),
-              //       onPressed: onFavorite,
-              //       child: const Text('В избранное', style: TextStyle(fontSize: 20, color: Colors.white,),),),
-              //   ),
-              // ),
             ],
           ),
         ),

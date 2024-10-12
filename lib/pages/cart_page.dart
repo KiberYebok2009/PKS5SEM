@@ -62,60 +62,93 @@ class _CartPageState extends State<CartPage> {
     return total;
   }
 
-  @override 
-  Widget build(BuildContext context) { 
-    return Scaffold( 
-      appBar: AppBar( 
-        title: const Center( 
-          child: Text( 
-            'Корзина', style: TextStyle(fontSize: 24, color: Colors.white), 
-          ), 
-        ), 
-        backgroundColor: Colors.black, 
-      ), 
-      backgroundColor: const Color.fromARGB(255, 139, 147, 255), 
-      body: Padding(
-        padding: const EdgeInsets.all(8.0), 
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder( 
-                padding: const EdgeInsets.all(8.0), 
-                itemCount: cart.length, 
-                itemBuilder: (BuildContext context, int index) { 
-                  return CartItem( 
-                    cart: cart[index],  
-                    onAdd: () => _add(index), 
-                    onDeleate: () => _deleate(index),
-                    onRemove: () => _removeAll(index),
-                  ); 
-                }, 
+  @override  
+  Widget build(BuildContext context) {  
+    return Scaffold(  
+      appBar: AppBar(  
+        title: const Center(  
+          child: Text(  
+            'Корзина', style: TextStyle(fontSize: 24, color: Colors.white),  
+          ),  
+        ),  
+        backgroundColor: Colors.black,  
+      ),  
+      backgroundColor: const Color.fromARGB(255, 139, 147, 255),  
+      body: Padding( 
+        padding: const EdgeInsets.all(8.0),  
+        child: Column( 
+          children: [ 
+            Expanded( 
+              child: ListView.builder(  
+                padding: const EdgeInsets.all(8.0),  
+                itemCount: cart.length,  
+                itemBuilder: (BuildContext context, int index) {  
+                  return Dismissible(  
+                    key: Key(cart[index].url),
+                    background: Container(color: Colors.red,),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (DismissDirection direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Подтверждение"),
+                            content: const Text("Хотите удалить товар из корзины?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(true),
+                                child: const Text("УДАЛИТЬ")
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(false),
+                                child: const Text("ОТМЕНИТЬ"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    onDismissed: (direction) {  
+                      _removeAll(index);  
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('${cart[index].url} удален из корзины'))
+                      );  
+                    },  
+                    child: CartItem(  
+                      cart: cart[index],   
+                      onAdd: () => _add(index),  
+                      onDeleate: () => _deleate(index), 
+                      onRemove: () => _removeAll(index), 
+                    ),  
+                  );  
+                },  
+              ),  
+            ), 
+            Padding( 
+              padding: const EdgeInsets.all(16.0), 
+              child: Container( 
+                decoration: BoxDecoration(color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(8),  
+                    border: Border.all(color: Colors.white, width: 2),), 
+                padding: const EdgeInsets.all(16.0), 
+                child: Row( 
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                  children: [ 
+                    const Text( 
+                      'Итого:', 
+                      style: TextStyle(fontSize: 24, color: Colors.white), 
+                    ), 
+                    Text( 
+                      '${_calculateTotal().toString()} ₽', 
+                      style: const TextStyle(fontSize: 24, color: Colors.white), 
+                    ), 
+                  ], 
+                ), 
               ), 
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                decoration: BoxDecoration(color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(8), 
-                    border: Border.all(color: Colors.white, width: 2),),
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Итого:',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    Text(
-                      '${_calculateTotal().toString()} ₽',
-                      style: const TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ), 
-    ); 
+            ), 
+          ], 
+        ), 
+      ),  
+    );  
   } 
 }
