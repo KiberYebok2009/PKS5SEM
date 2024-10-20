@@ -1,16 +1,18 @@
-# flutter_application_2
+# Отчёт по практике №2
 
-A new Flutter project.
+## Программирование корпоративных систем
 
-## Getting Started
+### Студент - **Маркевич Артём Сергеевич**
 
-This project is a starting point for a Flutter application.
+### Группа - **ЭФБО-07-22**
 
-A few resources to get you started if this is your first Flutter project:
+### Шифр - **22Т0105**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Преподаватель - **Адышкин Сергей Сергеевич**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Семестр - 5 семестр, 2024-2025 гг.
+
+---
+
+- **Result**  
+  ![Result]()
