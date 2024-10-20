@@ -1,4 +1,4 @@
-# Отчёт по практике №2
+# Отчёт по практике №7
 
 ## Программирование корпоративных систем
 
@@ -14,5 +14,9 @@
 
 ---
 
-- **Result**  
-  ![Result]()
+- **Каталог**  
+  ![image](https://github.com/user-attachments/assets/a4c19cbf-aa15-42c4-8c52-c042e8f99fa8)
+- **Корзина**
+![image](https://github.com/user-attachments/assets/91553975-9a18-4299-88f8-1fb290f70a19)
+- **Профиль** 
+![image](https://github.com/user-attachments/assets/17229d4b-6344-484d-823e-8dbe0899948b)
