@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/pages/cart_page.dart';
-import 'package:flutter_application_2/components/item_component.dart';
-import 'package:flutter_application_2/models/item.dart';
-import 'package:flutter_application_2/models/cart_item.dart';
+import 'package:flutter_application_1/components/item_note.dart';
+import 'package:flutter_application_1/pages/add_page.dart';
+import 'package:flutter_application_1/pages/note_page.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
+import 'package:flutter_application_1/models/note.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
+import 'package:flutter_application_1/api_service.dart';
 
+// final List<Tovar> list1 = <Tovar>[
+//   Tovar(url:'../amnyam.webp', price:'999', discription:'АМНЯМ 1'), 
+//   Tovar(url:'../4.webp', price:'9999', discription:'АМНЯМ 2')
+// ];
 
-final List<Item> list = <Item>[
-  Item(
-    name:'ПЦР-тест на определение РНК коронавируса стандартный',
-    price:'1800',
-    day:'2 дня'
-  ), 
-  Item(
-    name:'Клинический анализ крови с лейкоцитарной формулировкой',
-    price:'690',
-    day:'1 день'
-  ),
-  Item(
-    name:'Биохимический анализ крови, базовый',
-    price:'2440',
-    day:'1 день'
-  )
-];
+final List<Tovar> favorite = <Tovar>[];
 
+List<Tovar> products = <Tovar>[];
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,31 +25,60 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  void _addToCart(int index) {
+  late Future<List<Tovar>> _products;
+
+  @override
+  void initState() {
+    super.initState();
+    _products = ApiService().getProducts();
+  }
+
+  void _removeTovar(int index) {
+    ApiService().deleteProduct(index);
+    Navigator.pop(context);
+  }
+
+  void _addTovar(Tovar tovar) {
+    ApiService().createProduct(tovar);
+    _products = ApiService().getProducts();
+  }
+
+  void _addToFavorite(int index, List list) {
+    setState(() {
+      if (favorite.contains(list[index]) == false) {
+        favorite.add(list[index]);
+        Navigator.pop(context, Tovar);
+      }
+    });
+  }
+
+  void _addToCart(int index, List list) {
     setState(() {
       if (tovars.contains(list[index]) == false) {
         tovars.add(list[index]);
 
         CartModel temp = CartModel(
-          name: list[index].name, 
+          url: list[index].url, 
           price: list[index].price,
           count: 1
         );
         cart.add(temp);
 
+        // Navigator.pop(context, Tovar);
       }
 
       else {
         int tempInd = tovars.indexOf(list[index]);
 
         CartModel temp = CartModel(
-          name: cart[tempInd].name, 
+          url: cart[tempInd].url, 
           price: cart[tempInd].price,
           count: cart[tempInd].count + 1
         );
 
         cart[tempInd] = temp;
 
+        Navigator.pop(context, Tovar);
       }
 
     });
@@ -66,30 +87,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: 
-        const Center(
-          child: SizedBox(
-            width: 335,
-            child: Text('Каталог услуг', 
-              style: TextStyle(fontSize: 24, color: Colors.black,),
-            ),
-          ),
-        ), backgroundColor: Colors.white,
+      appBar: AppBar(title: const Center(child: Text('ТОВАРЫ', style: TextStyle(fontSize: 24, color: Colors.white),),), backgroundColor: Colors.black,
       ),
-      body: Padding(padding: const EdgeInsets.all(8),
-        child: ListView.builder(
-        padding: const EdgeInsets.all(8),
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              child: ItemNote(
-                item: list[index],
-                addToCart: () { _addToCart(index); },
-              ),
-            );
-          },
-        ),
-      ), backgroundColor:  Colors.white,
+      body:
+      FutureBuilder<List<Tovar>>(
+        future: _products,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No products found'));
+          }
+          products = snapshot.data!;
+          return
+          Padding(padding: const EdgeInsets.all(8),
+            child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+              itemCount: products.length,
+              itemBuilder: (BuildContext context, int index) {
+                final product = products[index];
+                return GestureDetector(
+                  onTap: () => Navigator.push(
+                    context, 
+                    MaterialPageRoute(
+                      builder: (context) => NotePage(
+                        tovar: product,
+                        onRemove: () { _removeTovar(product.id); },
+                        onFavorite: () { _addToFavorite(index, products); },
+                        onCart: () { _addToCart(index, products); },
+                      ),
+                    ),
+                  ),
+                  child: ItemNote(
+                    tovar: product,
+                  ),
+                );
+              },
+            ),
+          ); 
+        },
+        
+      ),backgroundColor: const Color.fromARGB(255, 139, 147, 255),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AddPage(onAdd: _addTovar, tovar: products[0]),),
+          
+      ),
+      hoverColor: Colors.black,
+      foregroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255,255, 113, 205),
+      child: const Icon(Icons.add),
+      ),
     );
   }
 }

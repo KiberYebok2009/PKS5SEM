@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/pages/cart_page.dart';
-import 'package:flutter_application_2/pages/home_page.dart';
-import 'package:flutter_application_2/pages/profile_page.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
+import 'package:flutter_application_1/pages/home_page.dart';
+import 'package:flutter_application_1/pages/favorite_page.dart';
+import 'package:flutter_application_1/pages/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,8 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    CartPage(),
+    FavoritePage(),
     ProfilePage(),
+    CartPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,29 +53,36 @@ class _MyHomePageState extends State<MyHomePage> {
       body: 
       _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
+        backgroundColor: Colors.black,
+        items: const <BottomNavigationBarItem>[
+          
           BottomNavigationBarItem(
-            icon: Image.asset('../Vector.png', color: Colors.grey,),
-            activeIcon: Image.asset('../Vector.png', color: const Color(0xFF196EEE)),
+            icon: Icon(Icons.home, color: Colors.white,),
             label: 'Главная',
+            backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('../Group_196.png', color: Colors.grey,),
-            activeIcon: Image.asset('../Group_196.png', color: const Color(0xFF196EEE)),
-            label: 'Корзина', 
+            icon: Icon(Icons.favorite, color: Colors.white,),
+            label: 'Избранное',
+            backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Image.asset('../Group_197.png', color: Colors.grey,),
-            activeIcon: Image.asset('../Group_197.png', color: const Color(0xFF196EEE)),
+            icon: Icon(Icons.person, color: Colors.white,),
             label: 'Профиль',
+            backgroundColor: Colors.black,
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart, color: Colors.white,),
+            label: 'Корзина',
+            backgroundColor: Colors.black,
+          ),
+          
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFF196EEE),
-        unselectedItemColor: Colors.grey, // Цвет для невыбранных элементов
-        selectedLabelStyle: const TextStyle(color: Colors.grey), // Цвет для выбранного элемента
-        unselectedLabelStyle: const TextStyle(color: Colors.grey),
+        selectedItemColor: const Color.fromARGB(255,255, 113, 205),
+        unselectedItemColor: Colors.white, // Цвет для невыбранных элементов
+        selectedLabelStyle: const TextStyle(color: Colors.white), // Цвет для выбранного элемента
+        unselectedLabelStyle: const TextStyle(color: Colors.white),
         onTap: _onItemTapped,
       ),
     );

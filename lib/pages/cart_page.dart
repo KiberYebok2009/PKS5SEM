@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart'; 
-import 'package:flutter_application_2/components/cart_item_component.dart';
-import 'package:flutter_application_2/models/cart_item.dart'; 
-import 'package:flutter_application_2/models/item.dart'; 
+import 'package:flutter_application_1/components/cart_item.dart'; 
+import 'package:flutter_application_1/models/note.dart'; 
+import 'package:flutter_application_1/models/cart_model.dart'; 
  
 final List<CartModel> cart = <CartModel>[]; 
-final List<Item> tovars = <Item>[]; 
+final List<Tovar> tovars = <Tovar>[]; 
 
 class CartPage extends StatefulWidget { 
   const CartPage({super.key}); 
@@ -18,7 +18,7 @@ class _CartPageState extends State<CartPage> {
   void _add(index) { 
     setState(() { 
       CartModel temp = CartModel( 
-        name: cart[index].name,  
+        url: cart[index].url,  
         price: cart[index].price, 
         count: cart[index].count + 1 
       ); 
@@ -44,7 +44,7 @@ class _CartPageState extends State<CartPage> {
       
       else { 
         CartModel temp = CartModel( 
-          name: cart[index].name,  
+          url: cart[index].url,  
           price: cart[index].price, 
           count: cart[index].count - 1 
         ); 
@@ -65,17 +65,15 @@ class _CartPageState extends State<CartPage> {
   @override  
   Widget build(BuildContext context) {  
     return Scaffold(  
-      appBar: AppBar(title: 
-        const Center(
-          child: SizedBox(
-            width: 335,
-            child: Text('Корзина', 
-              style: TextStyle(fontSize: 24, color: Colors.black,),
-            ),
-          ),
-        ), backgroundColor: Colors.white,
-      ),
-      backgroundColor: Colors.white,  
+      appBar: AppBar(  
+        title: const Center(  
+          child: Text(  
+            'КОРЗИНА', style: TextStyle(fontSize: 24, color: Colors.white),  
+          ),  
+        ),  
+        backgroundColor: Colors.black,  
+      ),  
+      backgroundColor: const Color.fromARGB(255, 139, 147, 255),  
       body: Padding( 
         padding: const EdgeInsets.all(8.0),  
         child: Column( 
@@ -85,50 +83,69 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.all(8.0),  
                 itemCount: cart.length,  
                 itemBuilder: (BuildContext context, int index) {  
-                  return GestureDetector(
-                    child: CartItemComponent(
-                      cartModel: cart[index],
-                      onAdd: () { _add(index); },
-                      onRemove: () { _removeAll(index); },
-                      onDeleate: () { _deleate(index); },
-                    ),
-                  ); 
+                  return Dismissible(  
+                    key: Key(cart[index].url),
+                    background: Container(color: Colors.red,),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (DismissDirection direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Подтверждение"),
+                            content: const Text("Хотите удалить товар из корзины?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(true),
+                                child: const Text("УДАЛИТЬ")
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(false),
+                                child: const Text("ОТМЕНИТЬ"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    onDismissed: (direction) {  
+                      _removeAll(index);  
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('${cart[index].url} удален из корзины'))
+                      );  
+                    },  
+                    child: CartItem(  
+                      cart: cart[index],   
+                      onAdd: () => _add(index),  
+                      onDeleate: () => _deleate(index), 
+                      onRemove: () => _removeAll(index), 
+                    ),  
+                  );  
                 },  
               ),  
             ), 
             Padding( 
-              padding: const EdgeInsets.only(top: 0, bottom:120, left:0, right:0),
+              padding: const EdgeInsets.all(16.0), 
               child: Container( 
-                width: 335,
-                padding: const EdgeInsets.all(0.0), 
+                decoration: BoxDecoration(color: const Color.fromARGB(255,255, 113, 205), borderRadius: BorderRadius.circular(8),  
+                    border: Border.all(color: Colors.white, width: 2),), 
+                padding: const EdgeInsets.all(16.0), 
                 child: Row( 
                   mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                   children: [ 
                     const Text( 
                       'Итого:', 
-                      style: TextStyle(fontSize: 20, color: Colors.black), 
+                      style: TextStyle(fontSize: 24, color: Colors.white), 
                     ), 
                     Text( 
                       '${_calculateTotal().toString()} ₽', 
-                      style: const TextStyle(fontSize: 20, color: Colors.black,), 
+                      style: const TextStyle(fontSize: 24, color: Colors.white), 
                     ), 
                   ], 
                 ), 
               ), 
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 0, bottom:26, left:0, right:0),
-              child: Container(
-                width: 335,
-                height: 56,
-                decoration: BoxDecoration(color: const Color(0xFF196EEE),
-                borderRadius: BorderRadius.circular(10),),
-                child: const Center(
-                  child: Text('Перейти к оформлению заказа', style: TextStyle(fontSize: 17, color: Colors.white),
-                  ),
-                ),
-              ),
-            )
+            ), 
           ], 
         ), 
       ),  
