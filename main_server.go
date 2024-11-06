@@ -16,10 +16,26 @@ type Product struct {
 	Price       string
 }
 
+type CartProduct struct {
+	ID       int
+	ImageURL string
+	Price    string
+	Count    int
+}
+
 // Пример списка продуктов
 var products = []Product{
 	{ID: 1, ImageURL: "../amnyam.webp", Name: "Амням 1", Description: "Амням 1", Price: "999"},
 	{ID: 2, ImageURL: "../4.webp", Name: "Амням 2", Description: "Амням 2", Price: "1999"},
+}
+
+var cart = []CartProduct{
+	{ID: 1, ImageURL: "../amnyam.webp", Price: "999", Count: 1},
+	{ID: 2, ImageURL: "../4.webp", Price: "1999", Count: 2},
+}
+
+var favorite = []Product{
+	{ID: 1, ImageURL: "../amnyam.webp", Name: "Амням 1", Description: "Амням 1", Price: "999"},
 }
 
 // CORS middleware
@@ -42,6 +58,13 @@ func getProductsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// Преобразуем список заметок в JSON
 	json.NewEncoder(w).Encode(products)
+}
+
+func getFavoriteProductsHandler(w http.ResponseWriter, r *http.Request) {
+	// Устанавливаем заголовки для правильного формата JSON
+	w.Header().Set("Content-Type", "application/json")
+	// Преобразуем список заметок в JSON
+	json.NewEncoder(w).Encode(favorite)
 }
 
 // обработчик для POST-запроса, добавляет продукт
@@ -69,6 +92,36 @@ func createProductHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	newProduct.ID = lastID + 1
 	products = append(products, newProduct)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(newProduct)
+}
+
+// Добавление в избранное
+func addToFavoriteProductHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var newProduct Product
+	err := json.NewDecoder(r.Body).Decode(&newProduct)
+	if err != nil {
+		fmt.Println("Error decoding request body:", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	fmt.Printf("Received new Product: %+v\n", newProduct)
+	var lastID int = len(favorite)
+
+	for _, productItem := range favorite {
+		if productItem.ID > lastID {
+			lastID = productItem.ID
+		}
+	}
+	newProduct.ID = lastID + 1
+	favorite = append(favorite, newProduct)
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(newProduct)
@@ -127,6 +180,35 @@ func deleteProductHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Product not found", http.StatusNotFound)
 }
 
+// Удаление из избранного
+func deleteFavoriteProductHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Получаем ID из URL
+	idStr := r.URL.Path[len("/Favorites/delete/"):]
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Invalid Product ID", http.StatusBadRequest)
+		return
+	}
+
+	// Ищем и удаляем продукт с данным ID
+	for i, Product := range favorite {
+		if Product.ID == id {
+			// Удаляем продукт из среза
+			favorite = append(favorite[:i], favorite[i+1:]...)
+			w.WriteHeader(http.StatusNoContent) // Успешное удаление, нет содержимого
+			return
+		}
+	}
+
+	// Если продукт не найден
+	http.Error(w, "Product not found", http.StatusNotFound)
+}
+
 // Обновление продукта по id
 func updateProductHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
@@ -175,6 +257,10 @@ func main() {
 	http.HandleFunc("/products/", getProductByIDHandler)       // Получить продукт по ID
 	http.HandleFunc("/products/update/", updateProductHandler) // Обновить продукт
 	http.HandleFunc("/products/delete/", deleteProductHandler) // Удалить продукт
+
+	http.HandleFunc("/favorites", getFavoriteProductsHandler)           // Получение избранных товаров
+	http.HandleFunc("/favorites/add", addToFavoriteProductHandler)      // Добавление товара в избранное
+	http.HandleFunc("/favorites/delete/", deleteFavoriteProductHandler) // Удалить товар из избранного
 
 	fmt.Println("Server is running on port 8080!")
 	http.ListenAndServe(":8080", cors(http.DefaultServeMux)) // Оберните маршрутизатор в CORS middleware
