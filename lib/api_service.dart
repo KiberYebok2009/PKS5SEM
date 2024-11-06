@@ -32,4 +32,41 @@ class ApiService {
     await _dio.put('http://localhost:8080/products/update/$id', data: product.toJson());
   }
 
+  Future<Tovar> getProductById(int id) async {
+    try {
+      final response = await _dio.get('http://localhost:8080/products/$id');
+      if (response.statusCode == 200) {
+        return Tovar.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load product with id $id');
+      }
+    } catch (e) {
+      throw Exception('Error fetching product by id: $e');
+    }
+  }
+
+  Future<List<Tovar>> getFavoriteProducts() async {
+    try {
+      final response = await _dio.get('http://localhost:8080/favorites');
+      if (response.statusCode == 200) {
+        List<Tovar> favorites = (response.data as List)
+            .map((favorite) => Tovar.fromJson(favorite))
+            .toList();
+        return favorites;
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
+  }
+
+  void addProductToFavorite(Tovar product) async {
+    await _dio.post('http://localhost:8080/favorites/add', data: product.toJson());
+  }
+
+  void deleteProductFromFavorite(int id) async {
+    await _dio.delete('http://localhost:8080/favorites/delete/$id');
+  }
+
 }

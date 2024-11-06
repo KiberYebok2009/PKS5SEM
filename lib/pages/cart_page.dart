@@ -15,17 +15,17 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> { 
 
-  void _add(index) { 
-    setState(() { 
-      CartModel temp = CartModel( 
-        url: cart[index].url,  
-        price: cart[index].price, 
-        count: cart[index].count + 1 
-      ); 
+  // void _add(index) { 
+  //   setState(() { 
+  //     CartModel temp = CartModel( 
+  //       url: cart[index].url,  
+  //       price: cart[index].price, 
+  //       count: cart[index].count + 1 
+  //     ); 
 
-      cart[index] = temp; 
-    }); 
-  }
+  //     cart[index] = temp; 
+  //   }); 
+  // }
 
   void _removeAll(index) { 
     setState(() { 
@@ -35,24 +35,24 @@ class _CartPageState extends State<CartPage> {
     }); 
   } 
 
-  void _deleate(index) { 
-    setState(() { 
-      if (cart[index].count == 1) { 
-        cart.removeAt(index); 
-        tovars.removeAt(index); 
-      } 
+  // void _deleate(index) { 
+  //   setState(() { 
+  //     if (cart[index].count == 1) { 
+  //       cart.removeAt(index); 
+  //       tovars.removeAt(index); 
+  //     } 
       
-      else { 
-        CartModel temp = CartModel( 
-          url: cart[index].url,  
-          price: cart[index].price, 
-          count: cart[index].count - 1 
-        ); 
+  //     else { 
+  //       CartModel temp = CartModel( 
+  //         url: cart[index].url,  
+  //         price: cart[index].price, 
+  //         count: cart[index].count - 1 
+  //       ); 
 
-        cart[index] = temp; 
-      } 
-    }); 
-  } 
+  //       cart[index] = temp; 
+  //     } 
+  //   }); 
+  // } 
 
   int _calculateTotal() {
     int total = 0;
@@ -117,8 +117,8 @@ class _CartPageState extends State<CartPage> {
                     },  
                     child: CartItem(  
                       cart: cart[index],   
-                      onAdd: () => _add(index),  
-                      onDeleate: () => _deleate(index), 
+                      onAdd: () => {},  //_add(index)
+                      onDeleate: () => {}, //_deleate(index)
                       onRemove: () => _removeAll(index), 
                     ),  
                   );  

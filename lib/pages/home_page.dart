@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/item_note.dart';
 import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
-import 'package:flutter_application_1/pages/cart_page.dart';
+import 'package:flutter_application_1/pages/favorite_page.dart';
+// import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/models/note.dart';
-import 'package:flutter_application_1/models/cart_model.dart';
+// import 'package:flutter_application_1/models/cart_model.dart';
 import 'package:flutter_application_1/api_service.dart';
 
 // final List<Tovar> list1 = <Tovar>[
@@ -12,7 +13,7 @@ import 'package:flutter_application_1/api_service.dart';
 //   Tovar(url:'../4.webp', price:'9999', discription:'АМНЯМ 2')
 // ];
 
-final List<Tovar> favorite = <Tovar>[];
+// final List<Tovar> favorite = <Tovar>[];
 
 List<Tovar> products = <Tovar>[];
 
@@ -43,46 +44,50 @@ class _HomePageState extends State<HomePage> {
     _products = ApiService().getProducts();
   }
 
-  void _addToFavorite(int index, List list) {
-    setState(() {
-      if (favorite.contains(list[index]) == false) {
-        favorite.add(list[index]);
-        Navigator.pop(context, Tovar);
+  void _addToFavorite(Tovar tovar) {
+    int flag = 0;
+    for (int i = 0; i < favorites.length; i++){
+      if (favorites[i].name == tovar.name){
+        flag = 1;
       }
-    });
+    }
+    if (flag == 0){
+      ApiService().addProductToFavorite(tovar);
+      Navigator.pop(context);
+    }
   }
 
-  void _addToCart(int index, List list) {
-    setState(() {
-      if (tovars.contains(list[index]) == false) {
-        tovars.add(list[index]);
+  // void _addToCart(int index, List list) {
+  //   setState(() {
+  //     if (tovars.contains(list[index]) == false) {
+  //       tovars.add(list[index]);
 
-        CartModel temp = CartModel(
-          url: list[index].url, 
-          price: list[index].price,
-          count: 1
-        );
-        cart.add(temp);
+  //       CartModel temp = CartModel(
+  //         url: list[index].url, 
+  //         price: list[index].price,
+  //         count: 1
+  //       );
+  //       cart.add(temp);
 
-        // Navigator.pop(context, Tovar);
-      }
+  //       // Navigator.pop(context, Tovar);
+  //     }
 
-      else {
-        int tempInd = tovars.indexOf(list[index]);
+  //     else {
+  //       int tempInd = tovars.indexOf(list[index]);
 
-        CartModel temp = CartModel(
-          url: cart[tempInd].url, 
-          price: cart[tempInd].price,
-          count: cart[tempInd].count + 1
-        );
+  //       CartModel temp = CartModel(
+  //         url: cart[tempInd].url, 
+  //         price: cart[tempInd].price,
+  //         count: cart[tempInd].count + 1
+  //       );
 
-        cart[tempInd] = temp;
+  //       cart[tempInd] = temp;
 
-        Navigator.pop(context, Tovar);
-      }
+  //       Navigator.pop(context, Tovar);
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +120,18 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => NotePage(
                         tovar: product,
                         onRemove: () { _removeTovar(product.id); },
-                        onFavorite: () { _addToFavorite(index, products); },
-                        onCart: () { _addToCart(index, products); },
+                        onFavorite: () { 
+                          _addToFavorite(
+                            Tovar(
+                              id: favorites.length + 1,
+                              name: product.name, 
+                              description: product.description, 
+                              price: product.price, 
+                              url: product.url
+                            )
+                          ); 
+                        }, 
+                        onCart: () {  }, //_addToCart(index, products);
                       ),
                     ),
                   ),
