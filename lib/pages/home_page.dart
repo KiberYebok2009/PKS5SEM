@@ -3,9 +3,9 @@ import 'package:flutter_application_1/components/item_note.dart';
 import 'package:flutter_application_1/pages/add_page.dart';
 import 'package:flutter_application_1/pages/note_page.dart';
 import 'package:flutter_application_1/pages/favorite_page.dart';
-// import 'package:flutter_application_1/pages/cart_page.dart';
+import 'package:flutter_application_1/pages/cart_page.dart';
 import 'package:flutter_application_1/models/note.dart';
-// import 'package:flutter_application_1/models/cart_model.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
 import 'package:flutter_application_1/api_service.dart';
 
 // final List<Tovar> list1 = <Tovar>[
@@ -47,47 +47,40 @@ class _HomePageState extends State<HomePage> {
   void _addToFavorite(Tovar tovar) {
     int flag = 0;
     for (int i = 0; i < favorites.length; i++){
-      if (favorites[i].name == tovar.name){
+      if (favorites[i].description == tovar.description){
         flag = 1;
       }
     }
     if (flag == 0){
       ApiService().addProductToFavorite(tovar);
-      Navigator.pop(context);
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => const FavoritePage()
+        )
+      );
+      // Navigator.pop(context);
     }
   }
 
-  // void _addToCart(int index, List list) {
-  //   setState(() {
-  //     if (tovars.contains(list[index]) == false) {
-  //       tovars.add(list[index]);
-
-  //       CartModel temp = CartModel(
-  //         url: list[index].url, 
-  //         price: list[index].price,
-  //         count: 1
-  //       );
-  //       cart.add(temp);
-
-  //       // Navigator.pop(context, Tovar);
-  //     }
-
-  //     else {
-  //       int tempInd = tovars.indexOf(list[index]);
-
-  //       CartModel temp = CartModel(
-  //         url: cart[tempInd].url, 
-  //         price: cart[tempInd].price,
-  //         count: cart[tempInd].count + 1
-  //       );
-
-  //       cart[tempInd] = temp;
-
-  //       Navigator.pop(context, Tovar);
-  //     }
-
-  //   });
-  // }
+  void _addToCart(CartModel cartItem) {
+    int flag = 0;
+    for (int i = 0; i < cart.length; i++){
+      if (cart[i].url == cartItem.url){
+        flag = 1;
+      }
+    }
+    if (flag == 0){
+      ApiService().addProductToCart(cartItem);
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => const CartPage()
+        )
+      );
+      // Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +123,16 @@ class _HomePageState extends State<HomePage> {
                               url: product.url
                             )
                           ); 
+                        },
+                        onCart: () {
+                          _addToCart(
+                            CartModel(
+                              id: cart.length + 1, 
+                              price: product.price, 
+                              url: product.url, 
+                              count: 1)
+                          );
                         }, 
-                        onCart: () {  }, //_addToCart(index, products);
                       ),
                     ),
                   ),

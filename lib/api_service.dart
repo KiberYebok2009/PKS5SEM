@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/models/cart_model.dart';
 import 'package:flutter_application_1/models/note.dart';
 
 class ApiService {
@@ -67,6 +68,34 @@ class ApiService {
 
   void deleteProductFromFavorite(int id) async {
     await _dio.delete('http://localhost:8080/favorites/delete/$id');
+  }
+
+  Future<List<CartModel>> getCartProducts() async {
+    try {
+      final response = await _dio.get('http://localhost:8080/cart');
+      if (response.statusCode == 200) {
+        List<CartModel> cart = (response.data as List)
+            .map((cartItem) => CartModel.fromJson(cartItem))
+            .toList();
+        return cart;
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      throw Exception('Error fetching products: $e');
+    }
+  }
+
+  void addProductToCart(CartModel cartItem) async {
+    await _dio.post('http://localhost:8080/cart/add', data: cartItem.toJson());
+  }
+
+  void deleteProductFromCart(int id) async {
+    await _dio.delete('http://localhost:8080/cart/delete/$id');
+  }
+
+  void updateCartProduct(CartModel cartItem, int id) async {
+    await _dio.put('http://localhost:8080/cart/update/$id', data: cartItem.toJson());
   }
 
 }
