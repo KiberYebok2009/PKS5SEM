@@ -1,4 +1,4 @@
-# Отчёт по практике №1
+# Отчёт по практике №12
 
 ## Программирование корпоративных систем
 
@@ -14,8 +14,9 @@
 
 ---
 
-- **Chrome**  
-  ![Chrome](https://github.com/user-attachments/assets/61ea1caf-1830-410c-b1cb-141c5337d3ec)
-
-- **Phone**  
-  ![Phone](https://github.com/user-attachments/assets/82bade86-53d1-40f0-a76e-b90a7c900b84)
+- **Фильтрация**
+![image](https://github.com/user-attachments/assets/1a03a497-df76-45d1-9494-827c069f2c97)
+- **Сортировка по названию**
+![image](https://github.com/user-attachments/assets/fac9a5f8-5c84-4c4b-9e57-4dda7d806b04)
+- **Сортировка по цене**
+![image](https://github.com/user-attachments/assets/26b6f6a7-cd73-4b78-b67c-12488333fc7f)
